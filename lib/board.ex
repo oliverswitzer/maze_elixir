@@ -1,4 +1,3 @@
-
 defmodule Board do
   def new(maze_file) do
     {:ok, body} = File.read(maze_file)
@@ -14,17 +13,27 @@ defmodule Board do
           |> Enum.with_index
           |> Enum.reduce(%{}, fn {char, x}, acc ->
             cell = case char do
-              "*" -> %Cell{type: :border, occupied_by: nil}
-              " " -> %Cell{type: :corridor, occupied_by: nil}
-              "E" -> %Cell{type: :exit, occupied_by: nil}
-              "s" -> %Cell{type: :start, occupied_by: :player}
+              "*" -> %Cell{type: :border}
+              " " -> %Cell{type: :corridor}
+              "E" -> %Cell{type: :exit}
+              "s" -> %Cell{type: :start}
               _   -> raise "Invalid maze file"
             end
 
-            Map.put(acc, %Coordinate{x: x, y: y}, cell)
+            place_cell(acc, cell, x, y)
         end)
 
         Map.merge(acc, coordinates)
     end)
+  end
+
+
+  def place_cell(board, cell = %Cell{type: :start}, x, y) do
+    Map.put(board, :player_at, %Coordinate{x: x, y: y})
+     |> Map.put(%Coordinate{x: x, y: y}, %Cell{ cell | occupied_by: :player})
+  end
+
+  def place_cell(board, cell, x, y) do
+    Map.put(board, %Coordinate{x: x, y: y}, cell)
   end
 end
