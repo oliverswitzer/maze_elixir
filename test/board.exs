@@ -30,13 +30,4 @@ defmodule BoardTest do
       assert end_coord == %Cell{type: :exit, occupied_by: nil}
     end
   end
-
-  describe "advance" do
-    test "it will move the player one cell forward" do
-      result = Board.new("test/sample_maze.txt")
-       |> Board.advance
-
-      assert result[%Coordinate{x: 1, y: 1}] == %Cell{type: :exit, occupied_by: :player}
-    end
-  end
 end

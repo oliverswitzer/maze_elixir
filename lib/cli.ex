@@ -1,5 +1,4 @@
 defmodule Cli do
-
   def get_maze do
     IO.puts "Here are the available maze files"
     {:ok, files} = File.ls "lib/mazes"
