@@ -3,17 +3,19 @@ defmodule BoardTest do
   doctest Board
 
   setup do
-    maze = """
-    ***
-    *Es
-    ***
-    """ |> String.trim
+    maze =
+      """
+      ***
+      *Es
+      ***
+      """
+      |> String.trim()
 
     File.write("test/sample_maze.txt", maze)
 
-    on_exit fn ->
+    on_exit(fn ->
       if File.exists?("test/sample_maze.txt"), do: File.rm("test/sample_maze.txt")
-    end
+    end)
   end
 
   describe "new" do
