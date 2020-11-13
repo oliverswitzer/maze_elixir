@@ -8,6 +8,8 @@ A fun CLI-based maze that uses `ratatouille`, a terminal UI library in elixir.
 mix run lib/app.ex
 ```
 
+![Demo of CLI Maze App](assets/demo.gif)
+
 Add new mazes in `lib/mazes`. They adhere the following pattern:
 
 ```
