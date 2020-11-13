@@ -1,6 +1,6 @@
 # MazeElixir
 
-A fun CLI-based maze
+A fun CLI-based maze that uses `ratatouille`, a terminal UI library in elixir.
 
 # How to play
 
