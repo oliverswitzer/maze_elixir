@@ -7,6 +7,8 @@ defmodule MazeRenderer do
 
   @arrow_up key(:arrow_up)
   @arrow_down key(:arrow_down)
+  @arrow_left key(:arrow_left)
+  @arrow_right key(:arrow_right)
   @enter key(:enter)
 
   def init(%{window: window}) do
@@ -51,6 +53,29 @@ defmodule MazeRenderer do
             board: Board.new("lib/mazes/#{selected_maze}")
         }
 
+      _ ->
+        model
+    end
+  end
+
+  def update(
+        %{
+          page: :maze_interaction,
+          board: board
+        } = model,
+        msg
+      ) do
+    case msg do
+      {:event, %{key: key}} when key in [@arrow_up, @arrow_down, @arrow_left, @arrow_right] ->
+        direction =
+          case key do
+            @arrow_up -> :up
+            @arrow_down -> :down
+            @arrow_left -> :left
+            @arrow_right -> :right
+          end
+
+        %{model | board: Position.move(board, direction)}
       _ ->
         model
     end
