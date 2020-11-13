@@ -12,14 +12,18 @@ defmodule Position do
       end
 
     update_board(board, new_coord, player_coordinate, player_cell)
-    |> Map.put(:player_at, new_coord)
   end
 
   defp update_board(board, new_coord, old_coord, old_cell) do
-    new_cell = %Cell{board[new_coord] | occupied: true}
+    if board[new_coord] && board[new_coord].type !== :border do
+      new_cell = %Cell{board[new_coord] | occupied: true}
 
-    board
-    |> Map.put(new_coord, new_cell)
-    |> Map.put(old_coord, %Cell{old_cell | occupied: false})
+      board
+      |> Map.put(new_coord, new_cell)
+      |> Map.put(old_coord, %Cell{old_cell | occupied: false})
+      |> Map.put(:player_at, new_coord)
+    else
+      board
+    end
   end
 end

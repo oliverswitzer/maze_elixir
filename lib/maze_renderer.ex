@@ -76,6 +76,7 @@ defmodule MazeRenderer do
           end
 
         %{model | board: Position.move(board, direction)}
+
       _ ->
         model
     end
@@ -85,13 +86,11 @@ defmodule MazeRenderer do
     model
   end
 
-  def render(
-        %{
-          page: :maze_select,
-          maze_cursor: maze_cursor,
-          mazes: mazes
-        }
-      ) do
+  def render(%{
+        page: :maze_select,
+        maze_cursor: maze_cursor,
+        mazes: mazes
+      }) do
     view do
       label(content: "Please select a maze:")
 
@@ -109,11 +108,13 @@ defmodule MazeRenderer do
     end
   end
 
-  def render(%{
-        page: :maze_interaction,
-        selected_maze: maze,
-        board: board
-      } = model) do
+  def render(
+        %{
+          page: :maze_interaction,
+          selected_maze: maze,
+          board: board
+        } = model
+      ) do
     view do
       panel(
         title: "Selected maze: #{maze}",
@@ -129,10 +130,11 @@ defmodule MazeRenderer do
 
   def render_board(board) do
     board
-    |> Enum.filter(fn {k, v} -> k !== :player_at end)
+    |> Enum.filter(fn {k, _v} -> k !== :player_at end)
     |> Enum.map(fn
-      {coordinate, %Cell{occupied: true} = cell} ->
+      {coordinate, %Cell{occupied: true}} ->
         canvas_cell(x: coordinate.x, y: coordinate.y, char: "P")
+
       {coordinate, cell} ->
         cell_character =
           case cell.type do
