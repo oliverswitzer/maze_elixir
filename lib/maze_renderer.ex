@@ -16,7 +16,8 @@ defmodule MazeRenderer do
       page: :maze_select,
       mazes: File.ls!("lib/mazes"),
       maze_cursor: 1,
-      selected_maze: ""
+      selected_maze: "",
+      board: nil
     }
   end
 
@@ -37,18 +38,25 @@ defmodule MazeRenderer do
           end
 
         %{model | maze_cursor: new_cursor}
+
       {:event, %{key: key}} when key === @enter ->
         selected_maze =
           mazes
           |> Enum.at(maze_cursor - 1)
 
-        %{model | selected_maze: selected_maze, page: :maze_interaction}
+        %{
+          model
+          | selected_maze: selected_maze,
+            page: :maze_interaction,
+            board: Board.new("lib/mazes/#{selected_maze}")
+        }
+
       _ ->
         model
     end
   end
 
-  def update(model, msg) do
+  def update(model, _msg) do
     model
   end
 
@@ -57,7 +65,7 @@ defmodule MazeRenderer do
           page: :maze_select,
           maze_cursor: maze_cursor,
           mazes: mazes
-        } = model
+        }
       ) do
     view do
       label(content: "Please select a maze:")
@@ -76,9 +84,37 @@ defmodule MazeRenderer do
     end
   end
 
-  def render(%{page: :maze_interaction, selected_maze: maze}) do
+  def render(%{
+        page: :maze_interaction,
+        selected_maze: maze,
+        board: board
+      } = model) do
     view do
-      label(content: "Selected maze: #{maze}")
+      panel(
+        title: "Selected maze: #{maze}",
+        height: :fill,
+        padding: 0
+      ) do
+        canvas(height: model.height, width: model.width) do
+          render_board(board)
+        end
+      end
     end
+  end
+
+  def render_board(board) do
+    board
+    |> Enum.filter(fn {k, _v} -> k !== :player_at end)
+    |> Enum.map(fn {coordinate, cell} ->
+      cell_character =
+        case cell.type do
+          :exit -> "X"
+          :corridor -> " "
+          :start -> "S"
+          :border -> "*"
+        end
+
+      canvas_cell(x: coordinate.x, y: coordinate.y, char: cell_character)
+    end)
   end
 end
