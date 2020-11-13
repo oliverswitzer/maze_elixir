@@ -1,3 +1,3 @@
 defmodule Cell do
-  defstruct type: :corridor, occupied_by: nil
+  defstruct [:type, occupied: false]
 end

@@ -16,10 +16,10 @@ defmodule Position do
   end
 
   defp update_board(board, new_coord, old_coord, old_cell) do
-    new_cell = %Cell{board[new_coord] | occupied_by: :player}
+    new_cell = %Cell{board[new_coord] | occupied: true}
 
     board
     |> Map.put(new_coord, new_cell)
-    |> Map.put(old_coord, %Cell{old_cell | occupied_by: nil})
+    |> Map.put(old_coord, %Cell{old_cell | occupied: false})
   end
 end

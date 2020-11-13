@@ -4,15 +4,15 @@ defmodule PositionTest do
   setup do
     board = %{
       :player_at => %Coordinate{x: 1, y: 1},
-      %Coordinate{x: 0, y: 0} => %Cell{occupied_by: nil, type: :corridor},
-      %Coordinate{x: 0, y: 1} => %Cell{occupied_by: nil, type: :corridor},
-      %Coordinate{x: 0, y: 2} => %Cell{occupied_by: nil, type: :corridor},
-      %Coordinate{x: 1, y: 0} => %Cell{occupied_by: nil, type: :corridor},
-      %Coordinate{x: 1, y: 1} => %Cell{occupied_by: :player, type: :corridor},
-      %Coordinate{x: 1, y: 2} => %Cell{occupied_by: nil, type: :corridor},
-      %Coordinate{x: 2, y: 0} => %Cell{occupied_by: nil, type: :corridor},
-      %Coordinate{x: 2, y: 1} => %Cell{occupied_by: nil, type: :corridor},
-      %Coordinate{x: 2, y: 2} => %Cell{occupied_by: nil, type: :corridor}
+      %Coordinate{x: 0, y: 0} => %Cell{type: :corridor},
+      %Coordinate{x: 0, y: 1} => %Cell{type: :corridor},
+      %Coordinate{x: 0, y: 2} => %Cell{type: :corridor},
+      %Coordinate{x: 1, y: 0} => %Cell{type: :corridor},
+      %Coordinate{x: 1, y: 1} => %Cell{type: :corridor, occupied: true},
+      %Coordinate{x: 1, y: 2} => %Cell{type: :corridor},
+      %Coordinate{x: 2, y: 0} => %Cell{type: :corridor},
+      %Coordinate{x: 2, y: 1} => %Cell{type: :corridor},
+      %Coordinate{x: 2, y: 2} => %Cell{type: :corridor}
     }
 
     %{board: board}
@@ -22,8 +22,8 @@ defmodule PositionTest do
     test "it will move the player one cell to the left", %{board: board} do
       new_board = Position.move(board, :left)
 
-      assert new_board[%Coordinate{x: 0, y: 1}] == %Cell{type: :corridor, occupied_by: :player}
-      assert new_board[%Coordinate{x: 1, y: 1}] == %Cell{type: :corridor, occupied_by: nil}
+      assert new_board[%Coordinate{x: 0, y: 1}] == %Cell{type: :corridor, occupied: true}
+      assert new_board[%Coordinate{x: 1, y: 1}] == %Cell{type: :corridor, occupied: false}
     end
   end
 
@@ -31,8 +31,8 @@ defmodule PositionTest do
     test "it will move the player one cell up", %{board: board} do
       new_board = Position.move(board, :up)
 
-      assert new_board[%Coordinate{x: 1, y: 0}] == %Cell{type: :corridor, occupied_by: :player}
-      assert new_board[%Coordinate{x: 1, y: 1}] == %Cell{type: :corridor, occupied_by: nil}
+      assert new_board[%Coordinate{x: 1, y: 0}] == %Cell{type: :corridor, occupied: true}
+      assert new_board[%Coordinate{x: 1, y: 1}] == %Cell{type: :corridor, occupied: false}
     end
   end
 
@@ -40,8 +40,8 @@ defmodule PositionTest do
     test "it will move the player one cell down", %{board: board} do
       new_board = Position.move(board, :down)
 
-      assert new_board[%Coordinate{x: 1, y: 2}] == %Cell{type: :corridor, occupied_by: :player}
-      assert new_board[%Coordinate{x: 1, y: 1}] == %Cell{type: :corridor, occupied_by: nil}
+      assert new_board[%Coordinate{x: 1, y: 2}] == %Cell{type: :corridor, occupied: true}
+      assert new_board[%Coordinate{x: 1, y: 1}] == %Cell{type: :corridor, occupied: false}
     end
   end
 
@@ -49,8 +49,8 @@ defmodule PositionTest do
     test "it will move the player one cell to the right", %{board: board} do
       new_board = Position.move(board, :right)
 
-      assert new_board[%Coordinate{x: 2, y: 1}] == %Cell{type: :corridor, occupied_by: :player}
-      assert new_board[%Coordinate{x: 1, y: 1}] == %Cell{type: :corridor, occupied_by: nil}
+      assert new_board[%Coordinate{x: 2, y: 1}] == %Cell{type: :corridor, occupied: true}
+      assert new_board[%Coordinate{x: 1, y: 1}] == %Cell{type: :corridor, occupied: false}
     end
   end
 

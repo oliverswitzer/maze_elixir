@@ -32,7 +32,7 @@ defmodule Board do
   def place_cell(board, cell = %Cell{type: :start}, x, y) do
     board
     |> Map.put(:player_at, %Coordinate{x: x, y: y})
-    |> Map.put(%Coordinate{x: x, y: y}, %Cell{cell | occupied_by: :player})
+    |> Map.put(%Coordinate{x: x, y: y}, %Cell{cell | occupied: true})
   end
 
   def place_cell(board, cell, x, y) do

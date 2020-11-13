@@ -104,17 +104,20 @@ defmodule MazeRenderer do
 
   def render_board(board) do
     board
-    |> Enum.filter(fn {k, _v} -> k !== :player_at end)
-    |> Enum.map(fn {coordinate, cell} ->
-      cell_character =
-        case cell.type do
-          :exit -> "X"
-          :corridor -> " "
-          :start -> "S"
-          :border -> "*"
-        end
+    |> Enum.filter(fn {k, v} -> k !== :player_at end)
+    |> Enum.map(fn
+      {coordinate, %Cell{occupied: true} = cell} ->
+        canvas_cell(x: coordinate.x, y: coordinate.y, char: "P")
+      {coordinate, cell} ->
+        cell_character =
+          case cell.type do
+            :exit -> "X"
+            :corridor -> " "
+            :start -> "S"
+            :border -> "*"
+          end
 
-      canvas_cell(x: coordinate.x, y: coordinate.y, char: cell_character)
+        canvas_cell(x: coordinate.x, y: coordinate.y, char: cell_character)
     end)
   end
 end
