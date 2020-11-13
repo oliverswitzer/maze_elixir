@@ -1,21 +1,16 @@
 # MazeElixir
 
-**TODO: Add description**
+A fun CLI-based maze
 
-## Installation
+# How to play
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `maze_elixir` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:maze_elixir, "~> 0.1.0"}
-  ]
-end
+```shell
+mix run lib/app.ex
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/maze_elixir](https://hexdocs.pm/maze_elixir).
+Add new mazes in `lib/mazes`. They adhere the following pattern:
 
+"*" - wall
+" " - moveable space
+"s" - starting position
+"E" - ending position
