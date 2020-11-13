@@ -138,7 +138,7 @@ defmodule MazeRenderer do
       {coordinate, cell} ->
         cell_character =
           case cell.type do
-            :exit -> "X"
+            :exit -> "E"
             :corridor -> " "
             :start -> "S"
             :border -> "*"
